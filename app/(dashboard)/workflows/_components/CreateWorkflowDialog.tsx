@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
+import { Layers2Icon } from "lucide-react";
+import CustomDialogHeader from "@/components/CustomDialogHeader";
 
 export function CreateWorkflowDialog({
   triggerText,
@@ -20,8 +22,15 @@ export function CreateWorkflowDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>{triggerText ?? "CREATE WORKFLOW"}</Button>
+        <Button>{triggerText ?? "create workflow"}</Button>
       </DialogTrigger>
+      <DialogContent className="px-0">
+        <CustomDialogHeader
+          icon={Layers2Icon}
+          title="create workflow"
+          subtitle="start building your own workflow"
+        />
+      </DialogContent>
     </Dialog>
   );
 }
