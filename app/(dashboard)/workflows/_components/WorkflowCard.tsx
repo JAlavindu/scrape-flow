@@ -21,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import TooltipWrapper from "@/components/TooltipWrapper";
 
 const statusColors = {
   [WorkflowStatus.DRAFT]: "bg-yellow-400 text-yellow-600",
@@ -85,11 +86,16 @@ function WorkflowActions() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={"outline"} size={"sm"}>
-          <TooltipWrapper>
-            <MoreVerticalIcon size={18} />
+          <TooltipWrapper content={"More actions"}>
+            <div className="flex items-center justify-center w-full h-full">
+              <MoreVerticalIcon size={18} />
+            </div>
           </TooltipWrapper>
         </Button>
       </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 }
