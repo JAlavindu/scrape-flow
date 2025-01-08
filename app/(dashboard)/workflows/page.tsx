@@ -68,7 +68,7 @@ async function UserWorkFlows() {
       </div>
     );
   }
-  return <pre>{JSON.stringify(workflows, null, 4)}</pre>;
+  return <div className="grid grid-cols-1 gap-4"></div>;
 }
 
 export default page;
