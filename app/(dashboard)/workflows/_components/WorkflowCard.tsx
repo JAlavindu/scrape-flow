@@ -1,12 +1,26 @@
 "use client";
 
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WorkflowStatus } from "@/types/workflow";
 import { Workflow } from "@prisma/client";
-import { FileTextIcon, PlayIcon } from "lucide-react";
+import {
+  FileTextIcon,
+  MoreVerticalIcon,
+  PlayIcon,
+  ShuffleIcon,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const statusColors = {
   [WorkflowStatus.DRAFT]: "bg-yellow-400 text-yellow-600",
@@ -45,8 +59,38 @@ function WorkflowCard({ workflow }: { workflow: Workflow }) {
             </h3>
           </div>
         </div>
+        <div className="flex items-center space-x-2">
+          <Link
+            href={`/workflow/editor/${workflow.id}`}
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+                size: "sm",
+              }),
+              "flex items-center gap-2"
+            )}
+          >
+            <ShuffleIcon size={16} />
+            Edit
+          </Link>
+          <WorkflowActions />
+        </div>
       </CardContent>
     </Card>
+  );
+}
+
+function WorkflowActions() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant={"outline"} size={"sm"}>
+          <TooltipWrapper>
+            <MoreVerticalIcon size={18} />
+          </TooltipWrapper>
+        </Button>
+      </DropdownMenuTrigger>
+    </DropdownMenu>
   );
 }
 
