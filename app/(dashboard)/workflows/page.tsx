@@ -39,7 +39,7 @@ function UserWorkFlowsSkeleton() {
 
 async function UserWorkFlows() {
   const workflows = await GetWorkflowsForUser();
-  if (!workflows) {
+  if (workflows instanceof Error) {
     return (
       <Alert variant={"destructive"}>
         <AlertCircle className="w-4 h-4" />
@@ -51,7 +51,7 @@ async function UserWorkFlows() {
     );
   }
 
-  if (UserWorkFlows.length === 0) {
+  if (workflows.length === 0) {
     return (
       <div className="flex flex-col gap-4 h-full items-center justify-center">
         <div className="rounded-full bg-accent w-20 h-20 flex items-center justify-center">

@@ -76,20 +76,21 @@ function WorkflowCard({ workflow }: { workflow: Workflow }) {
             <ShuffleIcon size={16} />
             Edit
           </Link>
-          <WorkflowActions />
+          <WorkflowActions workflowName={workflow.name} />
         </div>
       </CardContent>
     </Card>
   );
 }
 
-function WorkflowActions() {
+function WorkflowActions({ workflowName }: { workflowName: string }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   return (
     <>
       <DeleteWorkflowDialog
         open={showDeleteDialog}
         setOpen={setShowDeleteDialog}
+        workflowName={workflowName}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
