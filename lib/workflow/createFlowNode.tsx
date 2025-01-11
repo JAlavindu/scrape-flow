@@ -9,6 +9,7 @@ export function CreateFlowNode(
   return {
     id: crypto.randomUUID(),
     type: "FlowScrapeNode",
+    dragHandle: ".drag-handle",
     position: Position ?? { x: 0, y: 0 },
     data: {
       type: nodeType,
