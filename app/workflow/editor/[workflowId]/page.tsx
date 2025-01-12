@@ -23,7 +23,7 @@ async function page({ params }: { params: { workflowId: string } }) {
     return <div>Workflow not found</div>;
   }
 
-  return <Editor workflow={workflow}></Editor>;
+  return <Editor workflow={workflow} />;
 }
 
 export default page;
