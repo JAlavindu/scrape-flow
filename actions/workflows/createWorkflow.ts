@@ -26,7 +26,7 @@ export async function CreateWorkflow(form: createWorkflowSchemaType) {
     data: {
       userId,
       status: WorkflowStatus.DRAFT,
-      definition: "TODO",
+      definition: "{}",
       ...data,
     },
   });

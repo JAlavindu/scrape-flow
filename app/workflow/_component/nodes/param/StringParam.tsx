@@ -20,7 +20,7 @@ function StringParam({ param, value, updateNodeParamValue }: ParamProps) {
         className="text-xs"
         value={internalValue}
         placeholder="Enter value here"
-        onChange={(e) => setInterval(e.target.value)}
+        onChange={(e) => setInternalValue(e.target.value)}
         onBlurCapture={(e) => updateNodeParamValue(e.target.value)}
       />
       {param.helperText && (
