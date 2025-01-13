@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useId } from "react";
+import React, { useId, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { TaskParam } from "@/types/task";
 import { ParamProps } from "@/types/appNode";
 
 function StringParam({ param, value, updateNodeParamValue }: ParamProps) {
+  const [internalValue, setInternalValue] = useState(value);
   const id = useId();
   return (
     <div className="space-y-1 p-1 w-full">
@@ -16,9 +17,11 @@ function StringParam({ param, value, updateNodeParamValue }: ParamProps) {
       </Label>
       <Input
         id={id}
-        value={value}
+        className="text-xs"
+        value={internalValue}
         placeholder="Enter value here"
-        onChange={(e) => updateNodeParamValue(e.target.value)}
+        onChange={(e) => setInterval(e.target.value)}
+        onBlurCapture={(e) => updateNodeParamValue(e.target.value)}
       />
       {param.helperText && (
         <p className="text-muted-foreground px-2">{param.helperText}</p>
