@@ -20,6 +20,7 @@ import { TaskType } from "@/types/task";
 import NodeComponent from "./nodes/NodeComponent";
 import { AppNode } from "@/types/appNode";
 import DeletableEdge from "./edges/DeleteableEdge";
+import { isValid } from "date-fns";
 
 const nodeTypes = {
   FlowScrapeNode: NodeComponent,
@@ -89,6 +90,10 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
     [setEdges, updateNodeData, nodes]
   );
 
+  const isValidConnection = useCallback((connection: Edge | Connection) => {
+    return true;
+  }, []);
+
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
@@ -105,6 +110,7 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
         onDragOver={onDragOver}
         onDrop={onDrop}
         onConnect={onConnect}
+        isValidConnection={isValidConnection}
       >
         <Controls position="top-left" fitViewOptions={fitViewOptions} />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

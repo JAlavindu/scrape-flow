@@ -25,6 +25,7 @@ export function NodeInput({
       {!input.hodeHandle && (
         <Handle
           id={input.id}
+          isConnectable={!isConnected}
           type="target"
           position={Position.Left}
           className={cn(
