@@ -18,4 +18,9 @@ export const PageToHtmlTask = {
       hideHandle: true,
     },
   ],
+
+  outputs: [
+    { name: "Html", type: TaskParamType.STRING },
+    { name: "web page", type: TaskParamType.BROWSER_INSTANCE },
+  ],
 };

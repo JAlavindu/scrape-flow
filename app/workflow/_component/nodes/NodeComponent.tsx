@@ -5,6 +5,7 @@ import NodeHeader from "./NodeHeader";
 import { AppNodeData } from "@/types/appNode";
 import { TaskRegistry } from "@/lib/workflow/task/registy"; // Adjust the import path as necessary
 import { NodeInputs, NodeInput } from "./NodeInput";
+import { NodeOutput, NodeOutputs } from "./NodeOutputs";
 //mport { NodeInputs } from "@xyflow/react";
 
 const NodeComponent = memo((props: NodeProps) => {
@@ -18,6 +19,12 @@ const NodeComponent = memo((props: NodeProps) => {
           <NodeInput key={input.name} input={input} nodeId={props.id} />
         ))}
       </NodeInputs>
+
+      <NodeOutputs>
+        {task.inputs.map((output: any) => (
+          <NodeOutput key={output.name} output={output} />
+        ))}
+      </NodeOutputs>
     </NodeCard>
   );
 });
