@@ -25,7 +25,7 @@ export default function DeletableEdge(props: EdgeProps) {
       <EdgeLabelRenderer>
         <div
           style={{
-            Position: "absolute",
+            position: "absolute",
             transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
             pointerEvents: "all",
           }}
