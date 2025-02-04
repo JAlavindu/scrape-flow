@@ -1,12 +1,13 @@
-import { GetWorkflowsExecutionWithPhrase } from "@/actions/workflows/getWorkflowExecutionWithPhases";
+import { GetWorkflowsExecutionWithPhases } from "@/actions/workflows/getWorkflowExecutionWithPhases";
 import { GetWorkflowsForUser } from "@/actions/workflows/getWorkflowsForUser";
 import TopBar from "@/app/workflow/_component/topbar/TopBar";
 import { waitFor } from "@/lib/helper/waitFor";
 import { auth } from "@clerk/nextjs/server";
 import { Loader2Icon } from "lucide-react";
 import { Suspense } from "react";
+import ExecutionViewer from "./_components/ExecutionViewer";
 
-export default function ExecutionViewrPage({
+export default function ExecutionViewerPage({
   params,
 }: {
   params: { workflowId: string; executionId: string };
@@ -45,11 +46,11 @@ async function ExecutionViewerWrapper({
     return <div>Not authenticated</div>;
   }
 
-  const workflowExecution = await GetWorkflowsExecutionWithPhrase(executionId);
+  const workflowExecution = await GetWorkflowsExecutionWithPhases(executionId);
 
   if (!workflowExecution) {
     return <div>Execution not found</div>;
   }
 
-  return <div>Execution Viewer</div>;
+  return <ExecutionViewer initialData={workflowExecution} />;
 }
