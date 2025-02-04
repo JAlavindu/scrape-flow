@@ -13,6 +13,7 @@ import {
 import { auth } from "@clerk/nextjs/server";
 import { Select } from "@radix-ui/react-select";
 import { Workflow } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export async function RunWorkflow(form: {
   workflowId: string;
@@ -77,7 +78,7 @@ export async function RunWorkflow(form: {
         }),
       },
     },
-    Select: {
+    select: {
       id: true,
       phases: true,
     },
@@ -86,4 +87,6 @@ export async function RunWorkflow(form: {
   if (!execution) {
     throw new Error("workflow execution not created");
   }
+
+  redirect(`/workflow/runs/${workflowId}/${execution.id}`);
 }
