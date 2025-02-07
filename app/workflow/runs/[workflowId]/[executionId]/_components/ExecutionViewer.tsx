@@ -5,9 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { DatesToDurationString } from "@/lib/helper/dates";
+import { GetPhasesTotalCost } from "@/lib/helper/phases";
 import { WorkflowExecutionStatus } from "@/types/workflow";
 import { useQuery } from "@tanstack/react-query";
 import { add, formatDistanceToNow } from "date-fns";
+
 import {
   CalendarIcon,
   CircleDashed,
@@ -19,7 +21,7 @@ import {
   WorkflowIcon,
 } from "lucide-react";
 import { Span } from "next/dist/trace";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 
 type ExecutionData = Awaited<
   ReturnType<typeof GetWorkflowsExecutionWithPhases>
@@ -30,6 +32,8 @@ export default function ExecutionViewer({
 }: {
   initialData: ExecutionData;
 }) {
+  const [selectedPhase, setSelectedPhase] = useState<string | null>(null);
+
   const query = useQuery({
     queryKey: ["execution", initialData?.id],
     initialData,
@@ -38,10 +42,21 @@ export default function ExecutionViewer({
       q.state.data?.status === WorkflowExecutionStatus.RUNNING ? 1000 : false,
   });
 
+  const phaseDetails = useQuery({
+    queryKey: ["phase", selectedPhase],
+    queryFn: () => {
+      return query.data?.phases.find((phase) => phase.id === selectedPhase);
+    },
+    enabled: !!selectedPhase,
+  });
+
+  const isRunning = query.data?.status === WorkflowExecutionStatus.RUNNING;
   const duration = DatesToDurationString(
     query.data?.completedAt,
     query.data?.startedAt
   );
+
+  const creditsConsumed = GetPhasesTotalCost(query.data?.phases || []);
 
   //const creditsConsumed = GetPhasesTotalCost(query.data?.phases || []);
   return (
@@ -80,8 +95,8 @@ export default function ExecutionViewer({
           />
           <ExecutionLabel
             icon={CoinsIcon}
-            label="cREDITS CONSUMED"
-            value={"TODO"}
+            label="Credits Consumed"
+            value={creditsConsumed}
           />
         </div>
         <Separator />
@@ -97,7 +112,11 @@ export default function ExecutionViewer({
             <Button
               key={phase.id}
               className="w-full justify-between"
-              variant={"ghost"}
+              variant={selectedPhase === phase.id ? "secondary" : "ghost"}
+              onClick={() => {
+                if (isRunning) return;
+                setSelectedPhase(phase.id);
+              }}
             >
               <div className="flex items-center gap-2">
                 <Badge variant={"outline"}>{index + 1}</Badge>
